@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Inscription — IFRI_MentorLink</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #f4f6f9;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+    .wrapper {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 2rem;
+      width: 100%;
+      max-width: 820px;
+    }
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 2.5rem;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    }
+    .logo {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #1a2942;
+      display: block;
+      margin-bottom: 2rem;
+    }
+    h2 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #1a2942;
+      margin-bottom: 0.3rem;
+    }
+    .sous-titre {
+      color: #6b7280;
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+    }
+    .etapes {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+    .etape {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.82rem;
+      color: #9ca3af;
+    }
+    .etape.active { color: #2563eb; font-weight: 600; }
+    .etape.faite  { color: #16a34a; }
+    .num {
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      background: #e5e7eb;
+      color: #9ca3af;
+      font-size: 0.75rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .etape.active .num { background: #2563eb; color: white; }
+    .etape.faite .num  { background: #16a34a; color: white; }
+    .fleche { color: #d1d5db; font-size: 0.8rem; }
+    label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 0.4rem;
+    }
+    input, select, textarea {
+      width: 100%;
+      border: 1.5px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.92rem;
+      color: #1a2942;
+      outline: none;
+      transition: border-color 0.2s;
+      margin-bottom: 1rem;
+    }
+    input:focus, select:focus { border-color: #2563eb; }
+    input.invalide { border-color: #ef4444; }
+    .erreur {
+      font-size: 0.78rem;
+      color: #ef4444;
+      display: none;
+      margin-top: -0.8rem;
+      margin-bottom: 0.6rem;
+    }
+    .erreur.visible { display: block; }
+    .champ-pwd { position: relative; }
+    .champ-pwd input { padding-right: 3rem; }
+    .voir-pwd {
+      position: absolute;
+      right: 0.9rem;
+      top: 38%;
+      transform: translateY(-50%);
+      border: none;
+      background: none;
+      cursor: pointer;
+      color: #9ca3af;
+    }
+    .cgu {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      font-size: 0.88rem;
+      color: #6b7280;
+      margin-bottom: 1rem;
+    }
+    .cgu input { width: auto; margin: 0; }
+    .cgu a { color: #2563eb; text-decoration: none; }
+
+    .btn {
+      width: 100%;
+      background: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 0.85rem;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn:hover { background: #1d4ed8; }
+    .btn-retour {
+      background: white;
+      color: #374151;
+      border: 1.5px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 0.75rem 1.5rem;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .bas {
+      text-align: center;
+      font-size: 0.88rem;
+      color: #6b7280;
+      margin-top: 1rem;
+    }
+    .bas a { color: #2563eb; font-weight: 600; text-decoration: none; }
+    .section { display: none; }
+    .section.active { display: block; }
+    .recap {
+      background: #f9fafb;
+      border-radius: 8px;
+      padding: 1.2rem;
+      font-size: 0.88rem;
+      color: #374151;
+      line-height: 2;
+      margin-bottom: 1.5rem;
+    }
+    .carte-securite {
+      background: #eff6ff;
+      border-radius: 12px;
+      padding: 2rem;
+      text-align: center;
+    }
+    .carte-securite .icone { font-size: 3rem; margin-bottom: 1rem; }
+    .carte-securite h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #1a2942;
+      margin-bottom: 1rem;
+    }
+    .carte-securite ul { list-style: none; text-align: left; }
+    .carte-securite ul li {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      color: #374151;
+      margin-bottom: 0.6rem;
+    }
+    .ok { color: #16a34a; font-weight: 700; }
+    @media (max-width: 640px) {
+      .wrapper { grid-template-columns: 1fr; }
+      .carte-securite { display: none; }
+    }
+  </style>
+</head>
+<body>
+<div class="wrapper">
+  <div class="card">
+    <span class="logo">🎓 IFRI_MentorLink</span>
+    <h2>Créer un compte</h2>
+    <p class="sous-titre">Rejoignez la communauté IFRI_MentorLink</p>
+    <div class="etapes">
+      <div class="etape active" id="e1">
+        <div class="num">1</div> Informations
+      </div>
+      <span class="fleche">→</span>
+      <div class="etape" id="e2">
+        <div class="num">2</div> Profil académique
+      </div>
+      <span class="fleche">→</span>
+      <div class="etape" id="e3">
+        <div class="num">3</div> Disponibilités
+      </div>
+      <span class="fleche">→</span>
+      <div class="etape" id="e4">
+        <div class="num">4</div> Confirmation
+      </div>
+    </div>
+    <div class="section active" id="sec-1">
+      <div class="row g-2">
+        <div class="col-6">
+          <label>Nom</label>
+          <input type="text" id="nom" placeholder="Votre nom"/>
+          <span class="erreur" id="err-nom">Requis.</span>
+        </div>
+        <div class="col-6">
+          <label>Prénom</label>
+          <input type="text" id="prenom" placeholder="Votre prénom"/>
+          <span class="erreur" id="err-prenom">Requis.</span>
+        </div>
+      </div>
+      <label>Email</label>
+      <input type="email" id="email" placeholder="Votre email"/>
+      <span class="erreur" id="err-email">Email invalide.</span>
+      <label>Téléphone</label>
+      <input type="tel" id="tel" placeholder="Votre numéro"/>
+      <span class="erreur" id="err-tel">Requis.</span>
+      <label>Mot de passe</label>
+      <div class="champ-pwd">
+        <input type="password" id="pwd"
+               placeholder="Minimum 8 caractères"/>
+        <button class="voir-pwd"
+                onclick="togglePwd('pwd', this)">👁</button>
+      </div>
+      <span class="erreur" id="err-pwd">8 caractères minimum.</span>
+
+      <label>Confirmer le mot de passe</label>
+      <div class="champ-pwd">
+        <input type="password" id="pwd2"
+               placeholder="Répétez le mot de passe"/>
+        <button class="voir-pwd"
+                onclick="togglePwd('pwd2', this)">👁</button>
+      </div>
+      <span class="erreur" id="err-pwd2">
+        Les mots de passe ne correspondent pas.
+      </span>
+      <div class="cgu">
+        <input type="checkbox" id="cgu"/>
+        <span>J'accepte les
+          <a href="#">Conditions d'utilisation</a> et la
+          <a href="#">Politique de confidentialité</a>.
+        </span>
+      </div>
+      <span class="erreur" id="err-cgu">
+        Vous devez accepter les conditions.
+      </span>
+      <button class="btn" onclick="aller(2)">Suivant →</button>
+      <div class="bas">
+        Vous avez déjà un compte ?
+        <a href="connexion.html">Se connecter</a>
+      </div>
+    </div>
+    <div class="section" id="sec-2">
+      <label>Filière</label>
+      <select id="filiere">
+        <option value="">Choisir votre filière…</option>
+        <option>Intelligence Artificielle (IA)</option>
+        <option>Informatique et Multimédia (IM)</option>
+        <option>Génie Logiciel (GL)</option>
+        <option>Systèmes Embarqués & IoT (SE&IoT)</option>
+        <option>Systèmes d'Information (SI)</option>
+      </select>
+      <span class="erreur" id="err-filiere">Requis.</span>
+      <label>Niveau</label>
+      <select id="niveau">
+        <option value="">Choisir votre niveau…</option>
+        <option>Licence 1</option>
+        <option>Licence 2</option>
+        <option>Licence 3</option>
+        <option>Master 1</option>
+        <option>Master 2</option>
+      </select>
+      <span class="erreur" id="err-niveau">Requis.</span>
+      <label>Compétences maîtrisées</label>
+      <input type="text" id="competences"
+             placeholder="Ex: Python, SQL, Algorithmique…"/>
+      <label>Matières où tu as besoin d'aide</label>
+      <input type="text" id="lacunes"
+             placeholder="Ex: Réseaux, Mathématiques…"/>
+      <div class="d-flex gap-2">
+        <button class="btn-retour" onclick="aller(1)">← Retour</button>
+        <button class="btn" onclick="aller(3)">Suivant →</button>
+      </div>
+    </div>
+    <div class="section" id="sec-3">
+      <label>Disponibilités habituelles</label>
+      <div class="row g-2" id="grille-dispo"></div>
+      <span class="erreur" id="err-dispo">
+        Sélectionnez au moins une disponibilité.
+      </span>
+      <div class="d-flex gap-2 mt-3">
+        <button class="btn-retour" onclick="aller(2)">← Retour</button>
+        <button class="btn" onclick="aller(4)">Suivant →</button>
+      </div>
+    </div>
+    <div class="section" id="sec-4">
+      <p style="color:#374151; margin-bottom:1rem; font-size:0.92rem;">
+        Vérifiez vos informations avant de confirmer.
+      </p>
+      <div class="recap" id="recap"></div>
+      <div class="d-flex gap-2">
+        <button class="btn-retour" onclick="aller(3)">← Modifier</button>
+        <button class="btn" onclick="inscrire()">
+          Confirmer l'inscription
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="carte-securite">
+    <div class="icone">🔒</div>
+    <h3>Vos données sont sécurisées</h3>
+    <ul>
+      <li><span class="ok">✓</span> Données chiffrées</li>
+      <li><span class="ok">✓</span> Confidentialité garantie</li>
+      <li>
+        <span class="ok">✓</span>
+        Aucune donnée partagée sans votre consentement
+      </li>
+    </ul>
+  </div>
+</div>
+<script>
+  const jours = [
+    'Lundi matin','Lundi soir',
+    'Mardi matin','Mardi soir',
+    'Mercredi matin','Mercredi soir',
+    'Jeudi matin','Jeudi soir',
+    'Vendredi matin','Vendredi soir',
+    'Samedi','Dimanche'
+  ];
+  (function() {
+    const g = document.getElementById('grille-dispo');
+    jours.forEach(j => {
+      const col = document.createElement('div');
+      col.className = 'col-6 col-md-4';
+      col.innerHTML = `
+        <div style="background:white; border:1.5px solid #e5e7eb;
+                    border-radius:8px; padding:0.6rem 0.8rem;">
+          <input type="checkbox" value="${j}" id="${j}"/>
+          <label for="${j}"
+                 style="font-size:0.85rem; margin:0; cursor:pointer;">
+            ${j}
+          </label>
+        </div>`;
+      g.appendChild(col);
+    });
+  })();
+  function togglePwd(id, btn) {
+    const c = document.getElementById(id);
+    if (c.type === 'password') { c.type = 'text'; btn.textContent = '🙈'; }
+    else { c.type = 'password'; btn.textContent = '👁'; }
+  }
+  function afficherErreur(id, show) {
+    document.getElementById(id).classList.toggle('visible', show);
+  }
+  function aller(n) {
+    if (n === 2) {
+      const nom    = document.getElementById('nom').value.trim();
+      const prenom = document.getElementById('prenom').value.trim();
+      const email  = document.getElementById('email').value.trim();
+      const tel    = document.getElementById('tel').value.trim();
+      const pwd    = document.getElementById('pwd').value;
+      const pwd2   = document.getElementById('pwd2').value;
+      const cgu    = document.getElementById('cgu').checked;
+      let ok = true;
+      if (!nom)    { afficherErreur('err-nom',   true); ok=false; }
+      else           afficherErreur('err-nom',   false);
+      if (!prenom) { afficherErreur('err-prenom',true); ok=false; }
+      else           afficherErreur('err-prenom',false);
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        afficherErreur('err-email', true); ok=false;
+      } else afficherErreur('err-email', false);
+      if (!tel)    { afficherErreur('err-tel',   true); ok=false; }
+      else           afficherErreur('err-tel',   false);
+      if (pwd.length < 8) { afficherErreur('err-pwd', true); ok=false; }
+      else                  afficherErreur('err-pwd', false);
+      if (pwd !== pwd2) { afficherErreur('err-pwd2',true); ok=false; }
+      else                afficherErreur('err-pwd2',false);
+      if (!cgu) { afficherErreur('err-cgu',true); ok=false; }
+      else        afficherErreur('err-cgu',false);
+      if (!ok) return;
+    }
+    if (n === 3) {
+      const f = document.getElementById('filiere').value;
+      const v = document.getElementById('niveau').value;
+      let ok = true;
+      if (!f) { afficherErreur('err-filiere',true); ok=false; }
+      else      afficherErreur('err-filiere',false);
+      if (!v) { afficherErreur('err-niveau', true); ok=false; }
+      else      afficherErreur('err-niveau', false);
+      if (!ok) return;
+    }
+    if (n === 4) {
+      const sel = [...document.querySelectorAll(
+        '#grille-dispo input:checked'
+      )];
+      if (sel.length === 0) {
+        afficherErreur('err-dispo', true); return;
+      }
+      afficherErreur('err-dispo', false);
+      document.getElementById('recap').innerHTML = `
+        <b>Nom :</b> ${document.getElementById('prenom').value}
+                    ${document.getElementById('nom').value}<br/>
+        <b>Email :</b> ${document.getElementById('email').value}<br/>
+        <b>Téléphone :</b> ${document.getElementById('tel').value}<br/>
+        <b>Filière :</b> ${document.getElementById('filiere').value}<br/>
+        <b>Niveau :</b> ${document.getElementById('niveau').value}<br/>
+        <b>Disponibilités :</b>
+        ${sel.map(i => i.value).join(', ')}
+      `;
+    }
+    [1,2,3,4].forEach(i => {
+      document.getElementById('sec-'+i).classList.remove('active');
+      const e = document.getElementById('e'+i);
+      e.classList.remove('active','faite');
+      if (i < n) e.classList.add('faite');
+      if (i === n) e.classList.add('active');
+    });
+    document.getElementById('sec-'+n).classList.add('active');
+  }
+  function inscrire() {
+    const btn = document.querySelector('#sec-4 .btn');
+    btn.textContent = 'Inscription en cours…';
+    btn.disabled = true;
+    setTimeout(() => {
+      window.location.href = 'connexion.html';
+    }, 1500);
+  }
+</script>
+</body>
+</html>

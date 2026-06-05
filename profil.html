@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mon Profil — IFRI_MentorLink</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #f4f6f9;
+      display: flex;
+      min-height: 100vh;
+    }
+    .sidebar {
+      width: 250px;
+      background: #1a2942;
+      min-height: 100vh;
+      padding: 1.5rem 1rem;
+      position: fixed;
+      top: 0; left: 0;
+    }
+    .logo {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 2.5rem;
+      text-decoration: none;
+    }
+    .lien {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: rgba(255,255,255,0.65);
+      font-size: 0.92rem;
+      font-weight: 500;
+      padding: 0.7rem 1rem;
+      border-radius: 8px;
+      text-decoration: none;
+      margin-bottom: 0.2rem;
+      transition: all 0.2s;
+    }
+    .lien:hover {
+      background: rgba(255,255,255,0.08);
+      color: white;
+    }
+    .lien.actif {
+      background: #2563eb;
+      color: white;
+    }
+    .contenu {
+      margin-left: 250px;
+      flex: 1;
+      padding: 2rem 2.5rem;
+    }
+    .entete {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+    }
+    .entete h1 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #1a2942;
+    }
+    .btn-modifier {
+      background: white;
+      border: 1.5px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 0.6rem 1.2rem;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      font-size: 0.88rem;
+      color: #374151;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-modifier:hover { border-color: #2563eb; color: #2563eb; }
+    .carte {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      margin-bottom: 1.5rem;
+    }
+    .titre-carte {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #1a2942;
+      margin-bottom: 1.2rem;
+    }
+    .profil-haut {
+      display: grid;
+      grid-template-columns: 190px 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .carte-photo {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .photo {
+      width: 80px; height: 80px;
+      border-radius: 50%;
+      background: #e5e7eb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      margin-bottom: 0.8rem;
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+    }
+    .photo img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+    .btn-photo {
+      position: absolute;
+      bottom: 0; right: 0;
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 50%;
+      width: 26px; height: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.72rem;
+      cursor: pointer;
+    }
+    .carte-photo h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #1a2942;
+      margin-bottom: 0.2rem;
+    }
+    .carte-photo p {
+      font-size: 0.82rem;
+      color: #6b7280;
+      margin-bottom: 0.5rem;
+    }
+    .en-ligne {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.8rem;
+      color: #16a34a;
+      font-weight: 600;
+    }
+    .point-vert {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #16a34a;
+    }
+    .info-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #6b7280;
+      margin-bottom: 0.2rem;
+    }
+    .info-valeur {
+      font-size: 0.92rem;
+      color: #1a2942;
+      font-weight: 500;
+      margin-bottom: 1rem;
+    }
+    label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #6b7280;
+      margin-bottom: 0.3rem;
+    }
+    input, select, textarea {
+      width: 100%;
+      border: 1.5px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 0.65rem 1rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      color: #1a2942;
+      outline: none;
+      transition: border-color 0.2s;
+      margin-bottom: 1rem;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: #2563eb;
+    }
+    .tag {
+      display: inline-block;
+      background: #eff6ff;
+      color: #2563eb;
+      border: 1px solid #bfdbfe;
+      border-radius: 100px;
+      padding: 0.25rem 0.75rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+      margin: 0.2rem;
+    }
+    .tag.lacune {
+      background: #fef2f2;
+      color: #dc2626;
+      border-color: #fecaca;
+    }
+    .dispo-liste { list-style: none; }
+    .dispo-liste li {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #f3f4f6;
+      font-size: 0.88rem;
+      color: #374151;
+    }
+    .dispo-liste li:last-child { border-bottom: none; }
+    .heure { color: #6b7280; }
+    .btn-sauvegarder {
+      background: #1a2942;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 0.75rem 1.5rem;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-sauvegarder:hover { background: #2563eb; }
+    .btn-annuler {
+      background: white;
+      color: #374151;
+      border: 1.5px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 0.75rem 1.5rem;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .alerte {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      color: #166534;
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      font-size: 0.88rem;
+      margin-bottom: 1rem;
+      display: none;
+    }
+    .alerte.visible { display: block; }
+    @media (max-width: 768px) {
+      .sidebar { display: none; }
+      .contenu { margin-left: 0; padding: 1.5rem 1rem; }
+      .profil-haut { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<aside class="sidebar">
+  <a href="#" class="logo">🎓 IFRI_MentorLink</a>
+  <a href="#" class="lien">🏠 Tableau de bord</a>
+  <a href="profil.html" class="lien actif">👤 Mon profil</a>
+  <a href="#" class="lien">📋 Offres de mentorat</a>
+  <a href="#" class="lien">📝 Demandes de mentorat</a>
+  <a href="#" class="lien">💬 Messagerie</a>
+  <a href="#" class="lien">🔔 Notifications</a>
+  <a href="#" class="lien">⚙️ Paramètres</a>
+</aside>
+<main class="contenu">
+  <div class="entete">
+    <h1>Mon profil</h1>
+    <button class="btn-modifier" onclick="activer()">
+      ✏️ Modifier le profil
+    </button>
+  </div>
+  <div class="alerte" id="msg-succes">
+    ✅ Profil mis à jour avec succès !
+  </div>
+  <div class="profil-haut">
+    <div class="carte-photo">
+      <div class="photo"
+           onclick="document.getElementById('input-photo').click()">
+        <img id="img-profil" src="" style="display:none;"/>
+        <span id="emoji-profil">👤</span>
+        <div class="btn-photo">✏️</div>
+      </div>
+      <input type="file" id="input-photo" accept="image/*"
+             style="display:none;" onchange="previewPhoto(this)"/>
+      <h3 id="affichage-nom">Yves ADANDE</h3>
+      <p id="affichage-filiere">Étudiant - GL1</p>
+      <div class="en-ligne">
+        <div class="point-vert"></div> En ligne
+      </div>
+    </div>
+    <div class="carte">
+      <div class="titre-carte">Informations personnelles</div>
+      <div id="vue-infos">
+        <div class="info-label">Email</div>
+        <div class="info-valeur" id="v-email">
+          yves.adande@mail.com
+        </div>
+        <div class="info-label">Téléphone</div>
+        <div class="info-valeur" id="v-tel">97 12 34 56</div>
+        <div class="info-label">Filière</div>
+        <div class="info-valeur" id="v-filiere">Génie Logiciel (GL)</div>
+        <div class="info-label">Niveau</div>
+        <div class="info-valeur" id="v-niveau">1ère année</div>
+      </div>
+      <div id="edit-infos" style="display:none;">
+        <label>Prénom</label>
+        <input type="text" id="prenom" value="Yves"/>
+        <label>Nom</label>
+        <input type="text" id="nom" value="ADANDE"/>
+        <label>Email</label>
+        <input type="email" id="email" value="yves.adande@mail.com"/>
+        <label>Téléphone</label>
+        <input type="tel" id="tel" value="97 12 34 56"/>
+        <label>Filière</label>
+        <select id="filiere">
+          <option>Génie Logiciel (GL)</option>
+          <option>Intelligence Artificielle (IA)</option>
+          <option>Informatique et Multimédia (IM)</option>
+          <option>Systèmes Embarqués & IoT (SE&IoT)</option>
+          <option>Systèmes d'Information (SI)</option>
+        </select>
+        <label>Niveau</label>
+        <select id="niveau">
+          <option>1ère année</option>
+          <option>2ème année</option>
+          <option>3ème année</option>
+          <option>Master 1</option>
+          <option>Master 2</option>
