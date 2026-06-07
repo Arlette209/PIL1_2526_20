@@ -216,3 +216,6 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Membre 4 : Scripts de test local
+insert_TP_MATCHING.sql
