@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_cors import CORS
-from M4_Daniel_Workspace.backend_M4.matching import matching_bp
+from backend_membre4_matching.matching.matching import matching_bp
 app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False
 CORS(app, ressources={r"*/": {"origins": "*"}})
