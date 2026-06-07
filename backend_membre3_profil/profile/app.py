@@ -5,19 +5,23 @@
 # ============================================
 
 from flask import Flask
-from flask_mysqldb import MySQL
+import pymysql
 
 # Création de l'application Flask
 app = Flask(__name__)
 
 # ---- Configuration de la base de données ----
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'ifri2026'
-app.config['MYSQL_DB'] = 'ifri_mentorlink'
+DB_CONFIG = {
+    'host': 'localhost',
+    'user': 'root',
+    'password': 'ifri2026',
+    'database': 'ifri_mentorlink',
+    'cursorclass': pymysql.cursors.DictCursor
+}
 
-# Initialisation de MySQL
-mysql = MySQL(app)
+def get_db():
+    """Retourne une connexion à la base de données"""
+    return pymysql.connect(**DB_CONFIG)
 
 # Enregistrement des routes du profil
 from routes import profile_bp
