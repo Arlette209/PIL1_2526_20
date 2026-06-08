@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IFRI MentorLink - Rapport de Tests M2</title>
+    <style>
+        :root {
+            --primary: #1e293b;
+            --accent: #2563eb;
+            --success: #16a34a;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #334155;
+            --border: #e2e8f0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 3px solid var(--border);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        h1 { color: var(--primary); margin-bottom: 5px; }
+        h2 { color: var(--accent); margin-top: 30px; border-left: 4px solid var(--accent); padding-left: 10px; }
+        
+        .metadata {
+            background: var(--bg);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border: 1px solid var(--border);
+        }
+
+        .metadata ul { list-style: none; padding: 0; margin: 0; }
+        .metadata li { margin-bottom: 8px; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th { background-color: var(--primary); color: white; }
+        
+        .badge {
+            background-color: var(--success);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+
+        /* Effet magique : Titres déployables */
+        details {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-bottom: 15px;
+            padding: 15px;
+            transition: all 0.3s ease;
+        }
+
+        details[open] {
+            background: var(--card-bg);
+            border-color: var(--accent);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        summary {
+            font-weight: bold;
+            font-size: 1.1em;
+            color: var(--primary);
+            cursor: pointer;
+            outline: none;
+            user-select: none;
+        }
+
+        summary:hover { color: var(--accent); }
+
+        .details-content {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid var(--border);
+        }
+
+        pre {
+            background: #0f172a;
+            color: #38bdf8;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-family: 'Consolas', Monaco, monospace;
+        }
+
+        .json-block { background: #1e293b; color: #f1f5f9; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>INSTITUT DE FORMATION ET DE RECHERCHE EN INFORMATIQUE (IFRI)</h1>
+        <h3>UNIVERSITÉ D'ABOMEY-CALAVI (UAC)</h3>
+        <p><strong>PROJET :</strong> IFRI_MentorLink</p>
+    </header>
+
+    <div class="metadata">
+        <h2>Informations Générales</h2>
+        <ul>
+            <li><strong>Livrable :</strong> Cahier de Tests Unitaires — Module 1 : Contrôle d'accès</li>
+            <li><strong>Auteur :</strong> Meschac Trésor Fènou Witchédji LISSASSI</li>
+            <li><strong>Format  :</strong> Rapport Web</li>
+            <li><strong>Version :</strong> 1.0</li>
+        </ul>
+    </div>
+
+    <h2>1. Introduction & Objectif</h2>
+    <p>Ce rapport présente les résultats des tests unitaires automatisés pour le <strong>Module 1 (Contrôle d'accès et cycle de vie des comptes)</strong>. L'objectif est de s'assurer de la sécurité de notre site a travers nos barrières de sécurité (validation des données, hachage, sessions, middlewares) face aux diverses incohérences de connexion qu'on pourrait rencontrer.</p>
+
+    <h2>2. Tableau Récapitulatif des Cas de Test</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID Test</th>
+                <th>Route API</th>
+                <th>Objectif du Test</th>
+                <th>Code HTTP</th>
+                <th>Statut</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>CT_01</strong></td>
+                <td><code>/register</code></td>
+                <td>Refus d'inscription si tous les champs ne sont pas remplis </td>
+                <td><code>400 Bad Request</code></td>
+                <td><span class="badge">🟢 Passé</span></td>
+            </tr>
+            <tr>
+                <td><strong>CT_02</strong></td>
+                <td><code>/login</code></td>
+                <td>Refus de connexion si informations de connexions omises</td>
+                <td><code>400 Bad Request</code></td>
+                <td><span class="badge">🟢 Passé</span></td>
+            </tr>
+            <tr>
+                <td><strong>CT_03</strong></td>
+                <td><code>/login</code></td>
+                <td>Échec d'authentification (Compte inexistant)</td>
+                <td><code>401 Unauthorized</code></td>
+                <td><span class="badge">🟢 Passé</span></td>
+            </tr>
+            <tr>
+                <td><strong>CT_04</strong></td>
+                <td><code>/dashboard</code></td>
+                <td>Blocage d'accès à une route privée sans session</td>
+                <td><code>401 Unauthorized</code></td>
+                <td><span class="badge">🟢 Passé</span></td>
+            </tr>
+            <tr>
+                <td><strong>CT_05</strong></td>
+                <td><code>/reset-password</code></td>
+                <td>Refus de réinitialisation sur un email inconnu</td>
+                <td><code>404 Not Found</code></td>
+                <td><span class="badge">🟢 Passé</span></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>3. Fiches de Détail des Cas d'Erreur (Cliquez pour dérouler)</h2>
+
+    <details>
+        <summary>🔍 CT_01 : Procédure d'inscription incomplète</summary>
+        <div class="details-content">
+            <p><strong>Description :</strong> Vérifie que l'API bloque l'enregistrement si l'étudiant ne fournit pas toutes les données requises.</p>
+            <p><strong>Payload JSON envoyé :</strong></p>
+            <pre class="json-block">{ "nom": "Lissassi", "prenom": "Meschac" }</pre>
+            <p><strong>Réponse attendue de l'API :</strong></p>
+            <pre class="json-block">{ "error": "Veuillez remplir tous les champs" }</pre>
+        </div>
+    </details>
+
+    <details>
+        <summary>🔍 CT_02 : Tentative de connexion sans mot de passe</summary>
+        <div class="details-content">
+            <p><strong>Description :</strong> S'assure que le serveur interrompt immédiatement le traitement si l'un des paramètres d'authentification manque.</p>
+            <p><strong>Payload JSON envoyé :</strong></p>
+            <pre class="json-block">{ "email": "test@etudiant.com" }</pre>
+            <p><strong>Réponse attendue de l'API :</strong></p>
+            <pre class="json-block">{ "error": "Veuillez remplir tous les champs" }</pre>
+        </div>
+    </details>
+
+    <details>
+        <summary>🔍 CT_03 : Identifiants invalides (Compte introuvable)</summary>
+        <div class="details-content">
+            <p><strong>Description :</strong> Test du comportement du système face à un email n'existant pas dans la base de données MySQL.</p>
+            <p><strong>Payload JSON envoyé :</strong></p>
+            <pre class="json-block">{ "email": "intrus@ifri.com", "mot_de_passe": "password123" }</pre>
+            <p><strong>Réponse attendue de l'API :</strong></p>
+            <pre class="json-block">{ "error": "Identifiants incorrects" }</pre>
+        </div>
+    </details>
+
+    <details>
+        <summary>🔍 CT_04 : Interception par le Middleware (@login_required)</summary>
+        <div class="details-content">
+            <p><strong>Description :</strong> Vérifie que le décorateur bloque instantanément une requête vers un espace privé si la variable de session n'existe pas.</p>
+            <p><strong>Méthode HTTP :</strong> <code>GET /dashboard</code> (Sans cookie de session)</p>
+            <p><strong>Réponse attendue de l'API :</strong></p>
+            <pre class="json-block">{ "error": "Accès refusé. Veuillez vous connecter." }</pre>
+        </div>
+    </details>
+
+    <details>
+        <summary>🔍 CT_05 : Réinitialisation sur compte inexistant</summary>
+        <div class="details-content">
+            <p><strong>Description :</strong> Empêche la modification d'un mot de passe pour un utilisateur inexistant.</p>
+            <p><strong>Payload JSON envoyé :</strong></p>
+            <pre class="json-block">{ "email": "inconnu@ifri.com", "nouveau_mot_de_passe": "NewPass123!" }</pre>
+            <p><strong>Réponse attendue de l'API :</strong></p>
+            <pre class="json-block">{ "error": "Aucun compte associé à cet email" }</pre>
+        </div>
+    </details>
+
+    <h2>4. Rapport de Sortie Console (Automation Log)</h2>
+    <p>Résultat généré automatiquement par l'exécution du script de test unitaire <code>test_app.py</code> :</p>
+    <pre>
+.....
+----------------------------------------------------------------------
+Ran 5 tests in 0.142s
+
+OK</pre>
+
+</div>
+
+</body>
+</html>

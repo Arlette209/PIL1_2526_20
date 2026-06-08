@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rapport Technique - Membre 4</title>
+    <style>
+        :root {
+            --primary-color: #1e3a8a;
+            --secondary-color: #2563eb;
+            --text-color: #334155;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --border-color: #e2e8f0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 40px;
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .top_head {
+            text-align: center;
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 25px;
+            margin-bottom: 35px;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-size: 24px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            border-left: 4px solid var(--secondary-color);
+            padding-left: 12px;
+            margin-top: 35px;
+            font-size: 20px;
+        }
+
+        h3 {
+            color: var(--secondary-color);
+            font-size: 16px;
+            margin-top: 20px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        ul, ol {
+            margin-bottom: 20px;
+            padding-left: 25px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        code {
+            background-color: #f1f5f9;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            color: #db2777;
+        }
+
+        .info-meta {
+            font-size: 15px;
+            margin: 5px 0;
+        }
+
+        .alert-box {
+            background-color: #eff6ff;
+            border-left: 4px solid var(--secondary-color);
+            padding: 15px;
+            border-radius: 0 8px 8px 0;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="top_head">
+            <h1><strong>Rapport Technique de Fin de Projet IFRI_MENTORLINK</strong></h1>
+            <p class="info-meta"><strong>MODULE : ALGORITHME ET API DE MATCHING</strong></p>
+            <p class="info-meta"><strong>Présenté par :</strong> AHOUANSOU Mahutin Daniel Dieudonné (Membre 4)</p>
+            <p class="info-meta"><strong>Filière :</strong> Génie Logiciel</p>
+            <p class="info-meta"><strong>Année Académique :</strong> 2025-2026</p>
+        </div>
+
+        <section class="introduction">
+            <h2><strong>Introduction</strong></h2>
+            <p>Dans le cadre de notre projet intégrateur visant à concevoir une plateforme d'interconnexion et de mentorat
+                au sein de notre établissement (IFRI), le système a été découpé en plusieurs modules indépendants confiés
+                aux différents membres de l'équipe de développement.
+            </p>
+            <p>Ce rapport présente le travail réalisé sur le Module 4, responsable de la logique métier la plus critique de
+                l'application : l’algorithme de Matching. L'objectif principal de ce module est de mettre en relation de
+                manière automatisée, fluide et cohérente les profils d'apprenants (demandeurs de compétences) et de mentors
+                (offreurs de compétences) en exploitant les informations stockées dans la base de données.
+            </p>
+            <p>Les technologies retenues pour concevoir ce module sont le langage Python, le framework Flask pour
+                l'exposition de l'API, l'extension Flask-CORS pour la sécurité des échanges, et SQL (MySQL via PyMySQL) pour
+                la persistance des données.
+            </p>
+        </section>
+
+        <section class="module">
+            <h2><strong>I. Architecture et Structuration du Module</strong></h2>
+            <p>Afin de respecter les directives de centralisation de l'équipe et de garantir une intégration propre sur
+                notre dépôt commun GitHub, l'arborescence du module a été restructurée de manière stricte.
+            </p>
+            <p>Mon espace de travail est entièrement isolé et se compose ainsi :</p>
+            <ul>
+                <li>
+                    <strong><code>backend_membre4_matching/</code> : Le dossier racine officiel de mon module.</strong>
+                    <ul>
+                        <li><strong><code>app_M4.py</code> :</strong> Le point d'entrée principal de l'application Flask. Il
+                            initialise le serveur, configure les règles de sécurité CORS et enregistre les Blueprints.
+                        </li>
+                        <li><strong><code>TP_MATCHING.sql</code> :</strong> Le script de structure et d'insertion utilisé pour
+                            l'environnement de test local.</li>
+                        <li>
+                            <strong><code>matching/</code> : Un sous-dossier contenant le cœur de l'algorithme.</strong>
+                            <ul>
+                                <li><strong><code>__init__.py</code> :</strong> L'initialisation du package pour permettre les imports Python internes.</li>
+                                <li><strong><code>matching.py</code> :</strong> Le script Python contenant les routes de l'API
+                                    (Blueprints) et les requêtes logiques de l'algorithme de correspondance.
+                                </li>
+                                <li><strong><code>README_Matching.md</code> :</strong> La documentation technique interne
+                                    destinée à mes camarades pour faciliter l'interconnexion de nos modules.
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <p>Cette organisation logicielle permet de séparer le lancement de l'application (la configuration du serveur
+                web) de la logique mathématique et algorithmique du matching.
+            </p>
+        </section>
+
+        <section class="BD">
+            <h2><strong>II. Base de Données et Jeu de Tests</strong></h2>
+            <div class="R_SQL">
+                <h3><strong>II.i. Rôle du fichier SQL</strong></h3>
+                <p>Pour s'assurer de la pertinence des résultats de l'algorithme avant toute mise en réseau, une phase de
+                    modélisation et d'injection de données a été menée. Le fichier <code>TP_MATCHING.sql</code> a été conçu
+                    spécifiquement dans ce but. Il contient un jeu de données fictives complet simulant une activité réelle sur la
+                    plateforme : l'insertion de plusieurs profils de mentors, d'apprenants, de filières universitaires et de compétences
+                    distinctes. L'algorithme de matching s'appuie sur des requêtes SQL exploitant des jointures
+                    relationnelles complexes (JOIN utilisateurs, JOIN competences).
+                </p>
+            </div>
+
+            <div class="Sco_Pro">
+                <h3><strong>II.ii. Logique de Calcul des Scores et Classement des Profils</strong></h3>
+                <p>Pour que le matching ne soit pas une simple liste brute, j'ai mis en place un processus d'évaluation basé sur deux filtres stricts en amont, suivi d'un système de calcul de score de pertinence cumulatif sur un total de <strong>100 points maximum</strong> pour chaque mentor éligible :
+                </p>
+                <ul>
+                    <li>
+                        <strong>Le Pré-filtrage Académique et Technique (Conditions Strictes) :</strong> L'algorithme élimine d'office les profils qui ne partagent aucune compétence recherchée par l'apprenant. De plus, il applique un filtre hiérarchique obligatoire : le niveau d'étude du mentor doit être supérieur ou égal à celui de l'apprenant (<code>Niveau Mentor >= Niveau Apprenant</code>).
+                    </li>
+                    <li>
+                        <strong>Le Format du Mentorat (Score de base - Max 50 points) :</strong> Si le mentor propose un format en <code>PRESENTIEL</code>, il obtient un bonus complet de <strong>+50 points</strong>. S'il propose le format mixé <code>LES_DEUX</code>, il obtient <strong>+45 points</strong>, et s'il propose un format <code>EN_LIGNE</code>, le bonus est de <strong>+40 points</strong>.
+                    </li>
+                    <li>
+                        <strong>Le Score de Filière (Poids stratégique - Max 20 points) :</strong> L'algorithme vérifie si
+                        l'apprenant et le mentor appartiennent à la même filière d'étude. Si les filières correspondent
+                        exactement, un bonus de <strong>+20 points</strong> est attribué au score global afin de maximiser la pertinence du suivi académique.
+                    </li>
+                    <li>
+                        <strong>L'Expertise et Écart de Niveau (Max 10 points) :</strong> Si le mentor dispose d'un niveau d'études strictement supérieur à celui de l'apprenant, le système accorde <strong>+2.5 points par année d'écart</strong> (jusqu'à un plafond de 10 points). Si les deux utilisateurs ont le même niveau d'études, une base de <strong>+5 points</strong> est allouée.
+                    </li>
+                    <li>
+                        <strong>Le Poids des Compétences Communes Additionnelles (Max 20 points) :</strong> Le système compare les compétences maîtrisées par le mentor avec les lacunes globales de l'apprenant. Chaque correspondance bonus en dehors de la compétence principale ajoute <strong>+5 points</strong> (plafonné à 20 points).
+                    </li>
+                </ul>
+                <p>
+                    <strong>Mécanisme de classement :</strong>
+                    Une fois les scores individuels calculés pour chaque profil, l'algorithme effectue un tri
+                    décroissant via Python. Les mentors ayant le score le plus élevé sont positionnés en tête de liste dans la réponse JSON renvoyée au frontend, offrant ainsi une expérience de recherche optimisée pour l'utilisateur.
+                </p>
+            </div>
+        </section>
+
+        <section class="test_Rs">
+            <h2><strong>III. Tests en Réseau et Validation Multi-Machines</strong></h2>
+            <p>C'est la phase majeure de validation du projet. Pour prouver que le module est prêt pour un déploiement de
+                production et qu'il peut communiquer avec les modules des autres membres (le frontend ou
+                l'authentification), le serveur a été extrait de l'environnement isolé localhost pour être ouvert sur le
+                réseau local.
+            </p>
+
+            <div class="conf_Rs">
+                <h3><strong>III.i. Configuration Réseau et URLs de Validation</strong></h3>
+                <p>Le script Flask a été configuré pour écouter sur l'ensemble des interfaces réseau disponibles. Lors de la
+                    phase de test, la machine hébergeant le code s'est vu attribuer les paramètres réels suivants :
+                </p>
+                <ul>
+                    <li><strong>Adresse IP locale du serveur Backend :</strong> 192.168.1.103</li>
+                    <li><strong>Port d'écoute du serveur :</strong> 5000</li>
+                    <li><strong>URL principale d'accès à l'API :</strong> <code>http://192.168.1.103:5000/</code></li>
+                </ul>
+
+                <p>Points de terminaison (Endpoints) de l'API validés en réseau :</p>
+                <ol>
+                    <li><strong>Route d'index (<code>GET http://192.168.1.103:5000/</code>) :</strong> Utilisée pour vérifier le statut
+                        du serveur à distance. Elle renvoie un code de statut HTTP 200 OK confirmant que le serveur Flask
+                        est fonctionnel.
+                    </li>
+                    <li><strong>Route des Offres (<code>GET http://192.168.1.103:5000/offres</code>) :</strong> Permet à l'équipe de récupérer la liste complète des offres de mentorat ouvertes.
+                    </li>
+                    <li><strong>Route du Matching (<code>GET http://192.168.1.103:5000/matching?user_id=1</code>) :</strong> C'est le
+                        point d'accès réseau à l'algorithme. Lorsqu'elle est appelée depuis une machine distante, elle
+                        exécute la logique de mise en relation hiérarchisée et retourne un flux de données structuré au format JSON trié par score.
+                    </li>
+                </ol>
+            </div>
+
+            <div class="mat_Log">
+                <h3><strong>III.ii. Matériel et Logiciels Utilisés</strong></h3>
+                <p>La validation de cette architecture distribuée a nécessité la mise en place d'un véritable laboratoire de
+                    test impliquant plusieurs ordinateurs connectés sur le même sous-réseau et l'utilisation de la suite
+                    logicielle suivante :
+                </p>
+                <ul>
+                    <li><strong>PyCharm (IDE) :</strong> L'environnement de développement utilisé pour coder, debugger et
+                        exécuter le serveur Flask en mode d'écoute global (<code>0.0.0.0</code>).
+                    </li>
+                    <li><strong>Serveur de développement Flask :</strong> Configuré avec le débuggeur actif, il a servi de
+                        serveur applicatif web pour traiter les requêtes en temps réel.
+                    </li>
+                    <li><strong>Navigateur Web (Google Chrome) :</strong> Utilisé sur les machines clientes du réseau local
+                        pour formuler les requêtes vers l'adresse du serveur et inspecter les réponses JSON.
+                    </li>
+                    <li><strong>Terminal Windows & Git :</strong> Mobilisés pour analyser la configuration réseau (<code>ipconfig</code>) et gérer le suivi de version.
+                    </li>
+                </ul>
+            </div>
+
+            <div class="gest_CORS">
+                <h3><strong>III.iii. Gestion de la Sécurité CORS</strong></h3>
+                <p>L'un des défis majeurs des tests multi-machines est le blocage de sécurité des navigateurs lié au
+                    mécanisme de partage de ressources entre origines multiples. L'intégration du module <code>Flask-CORS</code> avec une configuration d'ouverture globale (<code>{"origins": "*"}</code>) a été indispensable pour autoriser explicitement les navigateurs des ordinateurs clients à consommer les données sans restriction de sécurité.
+                </p>
+            </div>
+        </section>
+
+        <section class="diff_sol">
+            <h2><strong>IV. Difficultés Rencontrées et Solutions Apportées</strong></h2>
+            <p>Le développement de ce module en équipe a présenté des défis d'ingénierie logicielle qui ont été résolus de
+                manière autonome :
+            </p>
+            <ol>
+                <li><strong>Conflits de fichiers et de structures sur Git :</strong> Des dossiers de configuration propres à
+                    l'environnement local (.idea) avaient été envoyés par erreur sur le dépôt GitHub distant.
+                    <ul>
+                        <li><strong>Solution :</strong> Utilisation de la commande <code>git rm -r --cached .idea</code> pour retirer ces
+                            configurations en ligne sans les effacer de la machine locale.</li>
+                    </ul>
+                </li>
+                <li><strong>Résolution des chemins d'importation Python :</strong> L'ouverture du projet avant d'avoir correctement structuré le package sous PyCharm provoquait des erreurs de détection lors des imports.
+                    <ul>
+                        <li><strong>Solution :</strong> Alignement rigoureux des imports absolus (<code>from backend_membre4_matching.matching.matching import ...</code>) et ajout d'un fichier <code>__init__.py</code> pour assurer une compatibilité parfaite.</li>
+                    </ul>
+                </li>
+            </ol>
+        </section>
+
+        <section class="conclusion">
+            <h2><strong>Conclusion</strong></h2>
+            <p>Le travail effectué sur le Module 4 a permis de livrer un algorithme de matching pleinement opérationnel,
+                performant et conforme aux exigences du cahier des charges. L'implémentation de tests en réseau local réels
+                à l'aide de plusieurs ordinateurs démontre la viabilité technique de l'API et sa capacité à s'intégrer de façon transparente avec l'interface utilisateur frontend.
+            </p>
+            <p>L'environnement de développement est désormais propre, documenté, et entièrement disponible sur le dépôt
+                GitHub de l'équipe pour les phases finales du projet intégrateur.</p>
+        </section>
+    </div>
+</body>
+
+</html>
