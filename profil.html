@@ -296,8 +296,8 @@
         <div class="btn-photo">✏️</div>
       </div>
       <input type="file" id="input-photo" accept="image/*"
-             style="display:none;" onchange="previewPhoto(this)"/>
-      <h3 id="affichage-nom">Yves ADANDE</h3>
+             style="display:none;" onchange="uploadPhoto(this)"/>
+      <h3 id="affichage-nom">Josiane ABALLO </h3>
       <p id="affichage-filiere">Étudiant - GL1</p>
       <div class="en-ligne">
         <div class="point-vert"></div> En ligne
@@ -308,7 +308,7 @@
       <div id="vue-infos">
         <div class="info-label">Email</div>
         <div class="info-valeur" id="v-email">
-          yves.adande@mail.com
+          josiane.aballo@mail.com
         </div>
         <div class="info-label">Téléphone</div>
         <div class="info-valeur" id="v-tel">97 12 34 56</div>
@@ -319,11 +319,11 @@
       </div>
       <div id="edit-infos" style="display:none;">
         <label>Prénom</label>
-        <input type="text" id="prenom" value="Yves"/>
+        <input type="text" id="prenom" value="Josiane"/>
         <label>Nom</label>
-        <input type="text" id="nom" value="ADANDE"/>
+        <input type="text" id="nom" value="ABALLO"/>
         <label>Email</label>
-        <input type="email" id="email" value="yves.adande@mail.com"/>
+        <input type="email" id="email" value="josiane.aballo@mail.com"/>
         <label>Téléphone</label>
         <input type="tel" id="tel" value="97 12 34 56"/>
         <label>Filière</label>
@@ -341,3 +341,260 @@
           <option>3ème année</option>
           <option>Master 1</option>
           <option>Master 2</option>
+         </select>
+      </div>
+    </div>
+
+    <div class="carte">
+      <div class="titre-carte">À propos de moi</div>
+      <div id="vue-bio"
+           style="font-size:0.9rem; color:#374151; line-height:1.7;">
+        Passionné par le développement et l'intelligence artificielle.
+        J'aime apprendre et partager mes connaissances.
+      </div>
+      <div id="edit-bio" style="display:none;">
+        <label>Bio</label>
+        <textarea id="bio" rows="5">Passionné par le développement et l'intelligence artificielle. J'aime apprendre et partager mes connaissances.</textarea>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="row g-3">
+    <div class="col-md-8">
+      <div class="carte">
+        <div class="titre-carte">
+          Compétences / Matières maîtrisées
+        </div>
+        <div>
+          <span class="tag">Python</span>
+          <span class="tag">SQL</span>
+          <span class="tag">Algorithmique</span>
+          <span class="tag">HTML/CSS</span>
+          <span class="tag">Java</span>
+        </div>
+        <div class="titre-carte mt-4">Lacunes / Besoin d'aide</div>
+        <div>
+          <span class="tag lacune">Réseaux</span>
+          <span class="tag lacune">Base de données</span>
+          <span class="tag lacune">Mathématiques</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="carte">
+        <div class="titre-carte">Disponibilités habituelles</div>
+        <ul class="dispo-liste">
+          <li>
+            <span>Lundi</span>
+            <span class="heure">14h - 16h</span>
+          </li>
+          <li>
+            <span>Mercredi</span>
+            <span class="heure">10h - 12h</span>
+          </li>
+          <li>
+            <span>Vendredi</span>
+            <span class="heure">15h - 17h</span>
+          </li>
+          <li>
+            <span>Samedi</span>
+            <span class="heure">09h - 12h</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div id="boutons" style="display:none;"
+       class="d-flex gap-2 justify-content-end mt-2">
+    <button class="btn-annuler" onclick="annuler()">Annuler</button>
+    <button class="btn-sauvegarder" onclick="sauvegarder()">
+      💾 Enregistrer les modifications
+    </button>
+  </div>
+
+</main>
+
+<script>
+  function activer() {
+    document.getElementById('vue-infos').style.display  = 'none';
+    document.getElementById('edit-infos').style.display = 'block';
+    document.getElementById('vue-bio').style.display    = 'none';
+    document.getElementById('edit-bio').style.display   = 'block';
+    document.getElementById('boutons').style.display    = 'flex';
+  }
+
+  function annuler() {
+    document.getElementById('vue-infos').style.display  = 'block';
+    document.getElementById('edit-infos').style.display = 'none';
+    document.getElementById('vue-bio').style.display    = 'block';
+    document.getElementById('edit-bio').style.display   = 'none';
+    document.getElementById('boutons').style.display    = 'none';
+  }
+
+  function sauvegarder() {
+    const prenom  = document.getElementById('prenom').value;
+    const nom     = document.getElementById('nom').value;
+    const email   = document.getElementById('email').value;
+    const tel     = document.getElementById('tel').value;
+    const filiere = document.getElementById('filiere').value;
+    const niveau  = document.getElementById('niveau').value;
+    const bio     = document.getElementById('bio').value;
+
+    document.getElementById('affichage-nom').textContent     = prenom + ' ' + nom;
+    document.getElementById('affichage-filiere').textContent = 'Étudiant·e - ' + niveau;
+    document.getElementById('v-email').textContent           = email;
+    document.getElementById('v-tel').textContent             = tel;
+    document.getElementById('v-filiere').textContent         = filiere;
+    document.getElementById('v-niveau').textContent          = niveau;
+    document.getElementById('vue-bio').textContent           = bio;
+
+    const btn = document.querySelector('.btn-sauvegarder');
+    btn.textContent = 'Enregistrement…';
+    btn.disabled = true;
+
+    setTimeout(() => {
+      btn.textContent = '💾 Enregistrer les modifications';
+      btn.disabled = false;
+      document.getElementById('msg-succes').classList.add('visible');
+      annuler();
+      setTimeout(() => {
+        document.getElementById('msg-succes').classList.remove('visible');
+      }, 3000);
+    }, 1200);
+  }
+
+  function previewPhoto(input) {
+    if (!input.files[0]) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+      const img = document.getElementById('img-profil');
+      img.src = e.target.result;
+      img.style.display = 'block';
+      document.getElementById('emoji-profil').style.display = 'none';
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+</script>
+  <script>
+  const USER_ID = localStorage.getItem('user_id');
+  const BASE = 'http://localhost:5000';
+
+  async function chargerProfil() {
+    const res  = await fetch(`${BASE}/profile/${USER_ID}`);
+    const data = await res.json();
+    document.getElementById('affichage-nom').textContent     = data.prenom + ' ' + data.nom;
+    document.getElementById('affichage-filiere').textContent = data.filiere + ' - ' + data.niveau;
+    document.getElementById('prenom').value  = data.prenom;
+    document.getElementById('nom').value     = data.nom;
+    document.getElementById('email').value   = data.email;
+    document.getElementById('tel').value     = data.telephone;
+    document.getElementById('v-email').textContent   = data.email;
+    document.getElementById('v-tel').textContent     = data.telephone;
+    document.getElementById('v-filiere').textContent = data.filiere;
+    document.getElementById('v-niveau').textContent  = data.niveau;
+    document.getElementById('vue-bio').textContent   = data.bio;
+    document.getElementById('bio').value             = data.bio;
+  }
+
+  async function chargerCompetences() {
+    const res  = await fetch(`${BASE}/competences/${USER_ID}`);
+    const data = await res.json();
+    const zone = document.getElementById('tags-forts');
+    zone.innerHTML = '';
+    data.competences.forEach(c => {
+      const tag = document.createElement('span');
+      tag.className   = 'tag';
+      tag.textContent = c;
+      zone.appendChild(tag);
+    });
+  }
+
+  async function chargerLacunes() {
+    const res  = await fetch(`${BASE}/lacunes/${USER_ID}`);
+    const data = await res.json();
+    const zone = document.getElementById('tags-lacunes');
+    zone.innerHTML = '';
+    data.lacunes.forEach(l => {
+      const tag = document.createElement('span');
+      tag.className   = 'tag lacune';
+      tag.textContent = l;
+      zone.appendChild(tag);
+    });
+  }
+
+  async function chargerDisponibilites() {
+    const res  = await fetch(`${BASE}/disponibilites/${USER_ID}`);
+    const data = await res.json();
+    const liste = document.querySelector('.dispo-liste');
+    liste.innerHTML = '';
+    data.disponibilites.forEach(d => {
+      const li = document.createElement('li');
+      li.innerHTML = `<span>${d.jour}</span><span class="heure">${d.heure}</span>`;
+      liste.appendChild(li);
+    });
+  }
+
+  async function sauvegarder() {
+    const prenom  = document.getElementById('prenom').value;
+    const nom     = document.getElementById('nom').value;
+    const email   = document.getElementById('email').value;
+    const tel     = document.getElementById('tel').value;
+    const filiere = document.getElementById('filiere').value;
+    const niveau  = document.getElementById('niveau').value;
+    const bio     = document.getElementById('bio').value;
+
+    const btn = document.querySelector('.btn-sauvegarder');
+    btn.textContent = 'Enregistrement…';
+    btn.disabled    = true;
+
+    await fetch(`${BASE}/profile/${USER_ID}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prenom, nom, email, telephone: tel, filiere, niveau, bio })
+    });
+
+    document.getElementById('affichage-nom').textContent     = prenom + ' ' + nom;
+    document.getElementById('affichage-filiere').textContent = filiere + ' - ' + niveau;
+    document.getElementById('v-email').textContent           = email;
+    document.getElementById('v-tel').textContent             = tel;
+    document.getElementById('v-filiere').textContent         = filiere;
+    document.getElementById('v-niveau').textContent          = niveau;
+    document.getElementById('vue-bio').textContent           = bio;
+
+    btn.textContent = '💾 Enregistrer les modifications';
+    btn.disabled    = false;
+    document.getElementById('msg-succes').classList.add('visible');
+    annuler();
+    setTimeout(() => {
+      document.getElementById('msg-succes').classList.remove('visible');
+    }, 3000);
+  }
+
+  async function uploadPhoto(input) {
+    if (!input.files[0]) return;
+    const formData = new FormData();
+    formData.append('photo', input.files[0]);
+    await fetch(`${BASE}/profile/${USER_ID}/photo`, {
+      method: 'POST',
+      body: formData
+    });
+    const reader = new FileReader();
+    reader.onload = e => {
+      const img = document.getElementById('img-profil');
+      img.src   = e.target.result;
+      img.style.display = 'block';
+      document.getElementById('emoji-profil').style.display = 'none';
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+
+  chargerProfil();
+  chargerCompetences();
+  chargerLacunes();
+  chargerDisponibilites();
+</script>
+</body>
+</html>
