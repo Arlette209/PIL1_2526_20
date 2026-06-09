@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Paramètres — IFRI_MentorLink</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+    <style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #f4f6f9;
+    display: flex;
+    min-height: 100vh;
+  }
+  .sidebar {
+    width: 250px;
+    background: #1a2942;
+    min-height: 100vh;
+    padding: 1.5rem 1rem;
+    position: fixed;
+    top: 0; left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .logo {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 2.5rem;
+    text-decoration: none;
+  }
+  .lien {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: rgba(255,255,255,0.65);
+    font-size: 0.92rem;
+    font-weight: 500;
+    padding: 0.7rem 1rem;
+    border-radius: 8px;
+    text-decoration: none;
+    margin-bottom: 0.2rem;
+    transition: all 0.2s;
+  }
+  .lien:hover { background: rgba(255,255,255,0.08); color: white; }
+  .lien.actif { background: #2563eb; color: white; }
+  .lien-rouge {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: #ef4444;
+    font-size: 0.92rem;
+    font-weight: 500;
+    padding: 0.7rem 1rem;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .lien-rouge:hover { background: rgba(239,68,68,0.1); }
+  .contenu {
+    margin-left: 250px;
+    flex: 1;
+    padding: 2.5rem 3rem;
+  }
+  h1 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #1a2942;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 2rem;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+  .carte {
+    background: white;
+    border-radius: 12px;
+    padding: 1.8rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .carte h2 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1a2942;
+    margin-bottom: 1.5rem;
+  }
+  label {
+    display: block;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #6b7280;
+    margin-bottom: 0.4rem;
+  }
+  input, select {
+    width: 100%;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 0.65rem 1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    color: #1a2942;
+    outline: none;
+    transition: border-color 0.2s;
+    margin-bottom: 1rem;
+  }
+  input:focus, select:focus { border-color: #2563eb; }
+  .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .toggle-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #f3f4f6;
+  }
+  .toggle-row:last-child { border-bottom: none; }
+  .toggle-label {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #1a2942;
+  }
+  .toggle-desc {
+    font-size: 0.75rem;
+    color: #9ca3af;
+    margin-top: 0.15rem;
+  }
+  .toggle {
+    position: relative;
+    width: 44px; height: 24px;
+    flex-shrink: 0;
+  }
+  .toggle input { display: none; }
+  .toggle-slider {
+    position: absolute;
+    inset: 0;
+    background: #e5e7eb;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .toggle-slider::before {
+    content: '';
+    position: absolute;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: white;
+    top: 3px; left: 3px;
+    transition: transform 0.2s;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  }
+  .toggle input:checked + .toggle-slider { background: #2563eb; }
+  .toggle input:checked + .toggle-slider::before { transform: translateX(20px); }
+  .info-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid #f3f4f6;
+    font-size: 0.88rem;
+  }
+  .info-row:last-child { border-bottom: none; }
+  .info-row .key { color: #6b7280; }
+  .info-row .val { color: #1a2942; font-weight: 600; }
+  .btn-save {
+    background: #1a2942;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 0.75rem 1.5rem;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-top: 1.5rem;
+    width: 100%;
+  }
+  .btn-save:hover { background: #2563eb; }
+  .btn-danger {
+    background: #fef2f2;
+    color: #dc2626;
+    border: 1.5px solid #fecaca;
+    border-radius: 8px;
+    padding: 0.75rem 1.5rem;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 0.75rem;
+    transition: all 0.2s;
+  }
+  .btn-danger:hover { background: #fee2e2; }
+  .overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+  }
+  .overlay.visible { display: flex; }
+  .modal {
+    background: white;
+    border-radius: 16px;
+    padding: 3rem 2.5rem;
+    text-align: center;
+    max-width: 420px;
+    width: 90%;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+  }
+  .modal-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+  .modal h2 {
+    font-size: 1.3rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #1a2942;
+    margin-bottom: 1rem;
+  }
+  .modal p {
+    font-size: 0.88rem;
+    color: #6b7280;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+  }
+  .modal-btns {
+    display: flex;
+    gap: 1rem;
+  }
+  .btn-annuler {
+    flex: 1;
+    background: white;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 0.75rem;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-annuler:hover { border-color: #9ca3af; }
+  .btn-deconnecter {
+    flex: 1;
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 0.75rem;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn-deconnecter:hover { background: #1d4ed8; }
+  @media (max-width: 768px) {
+    .sidebar { display: none; }
+    .contenu { margin-left: 0; padding: 1.5rem; }
+    .grid { grid-template-columns: 1fr; }
+    .row-2 { grid-template-columns: 1fr; }
+  }
+  body.dark {
+  background: #0f172a;
+  color: #f0f0f0;
+}
+body.dark .carte {
+  background: #1e293b;
+  color: #f0f0f0;
+}
+    body.dark h1 { color: #f0f0f0; }
+body.dark h2 { color: #f0f0f0; }
+body.dark label { color: #94a3b8; }
+body.dark input, body.dark select {
+  background: #0f172a;
+  border-color: #334155;
+  color: #f0f0f0;
+}
+body.dark .toggle-label { color: #f0f0f0; }
+body.dark .info-row .key { color: #94a3b8; }
+body.dark .info-row .val { color: #f0f0f0; }
+</style>
+</head>
+<body>
+<aside class="sidebar">
+  <div>
+    <a href="accueil.html" class="logo">🎓 IFRI_MentorLink</a>
+    <a href="tableaudebord.html" class="lien">🏠 Tableau de bord</a>
+    <a href="profil.html" class="lien">👤 Mon profil</a>
+    <a href="#" class="lien">📋 Offres de mentorat</a>
+    <a href="#" class="lien">📝 Demandes de mentorat</a>
+    <a href="messagerie.html" class="lien">💬 Messagerie</a>
+    <a href="notification.html" class="lien">🔔 Notifications</a>
+    <a href="parametre.html" class="lien actif">⚙️ Paramètres</a>
+  </div>
+  <a href="deconnexion.html" class="lien-rouge" onclick="ouvrirModal()">
+    → Déconnexion
+  </a>
+</aside>
+<main class="contenu">
+  <h1>Paramètres</h1>
+  <div class="grid">
+    <div class="carte">
+      <h2>Informations du compte</h2>
+      <div class="row-2">
+        <div>
+          <label>Prénom</label>
+          <input type="text" value="Yves"/>
+        </div>
+        <div>
+          <label>Nom</label>
+          <input type="text" value="ADANDE"/>
+        </div>
+      </div>
+      <label>Email</label>
+      <input type="email" value="yves.adande@mail.com"/>
+      <label>Téléphone</label>
+      <input type="tel" value="+229 97 12 34 56"/>
+      <button class="btn-save">Modifier</button>
+    </div>
+    <div class="carte">
+      <h2>Sécurité et Confidentialité</h2>
+      <label>Mot de passe actuel</label>
+      <input type="password" placeholder="••••••••"/>
+      <label>Nouveau mot de passe</label>
+      <input type="password" placeholder="Nouveau mot de passe"/>
+      <label>Confirmer le mot de passe</label>
+      <input type="password" placeholder="Confirmer"/>
+      <div class="toggle-row" style="margin-top:0.5rem;">
+        <div>
+          <div class="toggle-label">Authentification à deux facteurs</div>
+          <div class="toggle-desc">Sécurisez votre compte</div>
+        </div>
+        <label class="toggle">
+          <input type="checkbox"/>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      <button class="btn-save">Enregistrer</button>
+    </div>
+    <div class="carte">
+      <h2>Préférences de mentorat</h2>
+      <label>Filière</label>
+      <select>
+        <option>Génie Logiciel (GL)</option>
+        <option>Intelligence Artificielle (IA)</option>
+        <option>Informatique et Multimédia (IM)</option>
+        <option>Systèmes Embarqués & IoT (SE&IoT)</option>
+        <option>Systèmes d'Information (SI)</option>
+      </select>
+      <label>Niveau d'études</label>
+      <select>
+        <option>Licence 1</option>
+        <option>Licence 2</option>
+        <option>Licence 3</option>
+        <option>Master 1</option>
+        <option>Master 2</option>
+      </select>
+      <label>Format préféré</label>
+      <select>
+        <option>Présentiel</option>
+        <option>En ligne</option>
+        <option>Les deux</option>
+      </select>
+      <button class="btn-save">Enregistrer</button>
+    </div>
+      <div class="info-row">
+        <span class="key">Renouvellement</span>
+        <span class="val">20 juin 2026</span>
+      </div>
+      <div class="info-row">
+        <span class="key">Statut</span>
+        <span class="val" style="color:#16a34a;">✓ Actif</span>
+      </div>
+      <div class="toggle-row" style="margin-top:1rem;">
+        <div>
+          <div class="toggle-label">Notifications par email</div>
+          <div class="toggle-desc">Recevoir les alertes par mail</div>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" checked/>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      <div class="toggle-row">
+        <div>
+          <div class="toggle-label">Notifications push</div>
+          <div class="toggle-desc">Alertes dans l'application</div>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" checked/>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+   <div class="toggle-row">
+  <div>
+    <div class="toggle-label">Mode sombre</div>
+    <div class="toggle-desc">Changer l'apparence de l'application</div>
+  </div>
+  <label class="toggle">
+    <input type="checkbox" id="dark-toggle"
+           onchange="toggleDark()"/>
+    <span class="toggle-slider"></span>
+  </label>
+   </div>
+      <button class="btn-save">Enregistrer les modifications</button>
+      <button class="btn-danger" onclick="ouvrirModal()">
+        Se déconnecter
+      </button>
+    </div>
+  </div>
+</main>
+<div class="overlay" id="overlay">
+  <div class="modal">
+    <div class="modal-icon">⏻</div>
+    <h2>Déconnexion</h2>
+    <p>
+      Vous êtes sur le point de vous déconnecter de votre
+      compte IFRI_MentorLink. Êtes-vous sûr ?
+    </p>
+    <div class="modal-btns">
+      <button class="btn-annuler" onclick="fermerModal()">
+        Annuler
+      </button>
+      <button class="btn-deconnecter"
+              onclick="window.location.href='acceuil.html'">
+        Me déconnecter
+      </button>
+    </div>
+  </div>
+</div>
+<script>
+  function ouvrirModal() {
+    document.getElementById('overlay').classList.add('visible');
+  }
+  function fermerModal() {
+    document.getElementById('overlay').classList.remove('visible');
+  }
+  function toggleDark() {
+  document.body.classList.toggle('dark');
+}
+</script>
+</body>
+</html>

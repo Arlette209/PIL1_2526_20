@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Accueil — IFRI_MentorLink</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #f0ece3;
+    color: #1a2942;
+  }
+  .navbar {
+    background: #f0ece3;
+    padding: 1.2rem 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1a2942;
+    text-decoration: none;
+  }
+  .nav-logo img {
+    width: 32px;
+    height: 32px;
+  }
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+  .nav-links a {
+    font-size: 0.9rem;
+    color: #1a2942;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: #2563eb; }
+  .nav-btns {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .btn-outline {
+    background: transparent;
+    border: 1.5px solid #1a2942;
+    border-radius: 8px;
+    padding: 0.55rem 1.2rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #1a2942;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .btn-outline:hover {
+    background: #1a2942;
+    color: white;
+  }
+  .btn-solid {
+    background: #2563eb;
+    border: none;
+    border-radius: 8px;
+    padding: 0.55rem 1.2rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: white;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .btn-solid:hover { background: #1d4ed8; }
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 3rem;
+    padding: 5rem 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .hero h1 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    color: #1a2942;
+    line-height: 1.2;
+    margin-bottom: 1.2rem;
+  }
+  .hero h1 span { color: #2563eb; }
+  .hero p {
+    font-size: 0.95rem;
+    color: #6b7280;
+    line-height: 1.7;
+    margin-bottom: 2rem;
+    max-width: 440px;
+  }
+  .hero-btns {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  .btn-hero {
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 0.8rem 1.8rem;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .btn-hero:hover { background: #1d4ed8; }
+  .avatars-group {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .avatars {
+    display: flex;
+  }
+  .avatars span {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    border: 2px solid #f0ece3;
+    background: #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    margin-left: -10px;
+  }
+  .avatars span:first-child { margin-left: 0; }
+
+  .avatars-text {
+    font-size: 0.82rem;
+    color: #6b7280;
+  }
+  .avatars-text strong { color: #1a2942; display: block; }
+  .hero-image {
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+  }
+  .hero-image img {
+    width: 100%;
+    height: 380px;
+    object-fit: cover;
+    display: block;
+  }
+  .hero-image-placeholder {
+    width: 100%;
+    height: 380px;
+    background: linear-gradient(135deg, #1a2942 0%, #2563eb 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5rem;
+  }
+  .pourquoi {
+    padding: 5rem 3rem;
+    text-align: center;
+    background: #f0ece3;
+  }
+  .pourquoi h2 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #1a2942;
+    margin-bottom: 3rem;
+  }
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .feature {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .feature-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+  .feature h3 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #1a2942;
+    margin-bottom: 0.3rem;
+  }
+  .feature p {
+    font-size: 0.78rem;
+    color: #6b7280;
+    line-height: 1.6;
+  }
+  .stats-band {
+    background: #1a2942;
+    padding: 3rem;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    text-align: center;
+  }
+  .stat-item .num {
+    font-size: 2rem;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 0.3rem;
+  }
+  .stat-item .lbl {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.6);
+  }
+  .newsletter {
+    padding: 4rem 3rem;
+    display: flex;
+    justify-content: flex-end;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .newsletter-card {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    max-width: 480px;
+    width: 100%;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .newsletter-card .icon { font-size: 1.5rem; }
+  .newsletter-card h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1a2942;
+  }
+  .newsletter-card p {
+    font-size: 0.82rem;
+    color: #6b7280;
+    line-height: 1.6;
+  }
+  .newsletter-form {
+    display: flex;
+    gap: 0.75rem;
+  }
+  .newsletter-form input {
+    flex: 1;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 0.65rem 1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    outline: none;
+    color: #1a2942;
+  }
+  .newsletter-form input:focus { border-color: #2563eb; }
+  .newsletter-form button {
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 0.65rem 1.2rem;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  @media (max-width: 768px) {
+    .hero { grid-template-columns: 1fr; padding: 3rem 1.5rem; }
+    .features-grid { grid-template-columns: repeat(2, 1fr); }
+    .stats-band { grid-template-columns: repeat(2, 1fr); }
+    .navbar { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .newsletter { padding: 2rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+<nav class="navbar">
+  <a href="accueil.html" class="nav-logo">
+    🎓 IFRI_MentorLink
+  </a>
+  <div class="nav-links">
+    <a href="#">Accueil</a>
+  </div>
+  <div class="nav-btns">
+    <a href="connexion.html" class="btn-outline">Se connecter</a>
+    <a href="inscription.html" class="btn-solid">S'inscrire</a>
+  </div>
+</nav>
+<section class="hero">
+  <div>
+    <h1>
+      Trouvez le mentor qui vous aide à
+      <span>atteindre vos objectifs</span>
+    </h1>
+    <p>
+      IFRI_MentorLink connecte les étudiants de l'IFRI pour un
+      accompagnement académique et professionnel efficace,
+      adapté à vos besoins.
+    </p>
+    <div class="hero-btns">
+      <a href="inscription.html" class="btn-hero">
+        Je trouve un mentor
+      </a>
+    </div>
+    <div class="avatars-group">
+      <div class="avatars">
+        <span>😊</span>
+        <span>🧑</span>
+        <span>👩</span>
+        <span>👨</span>
+      </div>
+      <div class="avatars-text">
+        <strong>Plus de 1200 étudiants</strong>
+        déjà accompagnés avec succès
+      </div>
+    </div>
+  </div>
+  <div class="hero-image">
+    <div class="hero-image-placeholder">🎓</div>
+  </div>
+</section>
+<section class="pourquoi">
+  <h2>Pourquoi rejoindre IFRI_MentorLink ?</h2>
+  <div class="features-grid">
+    <div class="feature">
+      <div class="feature-icon">🎓</div>
+      <h3>Mentorat personnalisé</h3>
+      <p>Trouvez un mentor adapté à votre niveau et à vos objectifs.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">🎯</div>
+      <h3>Compétences variées</h3>
+      <p>Des mentors dans plusieurs domaines pour vous aider à progresser.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">⏰</div>
+      <h3>Horaires flexibles</h3>
+      <p>Échangez et apprenez selon vos disponibilités.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">🛡️</div>
+      <h3>Sécurité & confiance</h3>
+      <p>Un environnement sécurisé pour des échanges fiables et respectueux.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">📈</div>
+      <h3>Évolution garantie</h3>
+      <p>Développez vos compétences et atteignez vos objectifs plus rapidement.</p>
+    </div>
+  </div>
+</section>
+<div class="stats-band">
+  <div class="stat-item">
+    <div class="num">👤 1200+</div>
+    <div class="lbl">Étudiants inscrits</div>
+  </div>
+  <div class="stat-item">
+    <div class="num">🎓 350+</div>
+    <div class="lbl">Mentors actifs</div>
+  </div>
+  <div class="stat-item">
+    <div class="num">🤝 3000+</div>
+    <div class="lbl">Sessions réalisées</div>
+  </div>
+  <div class="stat-item">
+    <div class="num">⭐ 92%</div>
+    <div class="lbl">Taux de satisfaction</div>
+  </div>
+</div>
+</div>
+</body>
+</html>
