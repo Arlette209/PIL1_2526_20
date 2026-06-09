@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tableau de bord — IFRI_MentorLink</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #f4f6f9;
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      width: 250px;
+      background: #1a2942;
+      min-height: 100vh;
+      padding: 1.5rem 1rem;
+      position: fixed;
+      top: 0;
+      left: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 2.5rem;
+      text-decoration: none;
+    }
+
+    .lien {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: rgba(255, 255, 255, 0.65);
+      font-size: 0.92rem;
+      font-weight: 500;
+      padding: 0.7rem 1rem;
+      border-radius: 8px;
+      text-decoration: none;
+      margin-bottom: 0.2rem;
+      transition: all 0.2s;
+    }
+
+    .lien:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: white;
+    }
+
+    .lien.actif {
+      background: #2563eb;
+      color: white;
+    }
+
+    .lien-rouge {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: #ef4444;
+      font-size: 0.92rem;
+      font-weight: 500;
+      padding: 0.7rem 1rem;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .lien-rouge:hover {
+      background: rgba(239, 68, 68, 0.1);
+    }
+
+    .badge-notif {
+      background: #ef4444;
+      color: white;
+      font-size: 0.65rem;
+      font-weight: 700;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: auto;
+    }
+
+    .contenu {
+      margin-left: 250px;
+      flex: 1;
+      padding: 2.5rem 3rem;
+    }
+
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+    }
+
+    .top-bar h1 {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #1a2942;
+    }
+
+    .top-bar p {
+      font-size: 0.88rem;
+      color: #6b7280;
+      margin-top: 0.2rem;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .user-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #e5e7eb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+    }
+
+    .user-name {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #1a2942;
+    }
+
+    .user-role {
+      font-size: 0.75rem;
+      color: #6b7280;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: white;
+      border-radius: 12px;
+      padding: 1.2rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .stat-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      flex-shrink: 0;
+    }
+
+    .icon-green {
+      background: #dcfce7;
+    }
+
+    .icon-blue {
+      background: #dbeafe;
+    }
+
+    .icon-purple {
+      background: #ede9fe;
+    }
+
+    .icon-orange {
+      background: #ffedd5;
+    }
+
+    .stat-val {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #1a2942;
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.78rem;
+      color: #6b7280;
+      margin-top: 0.2rem;
+    }
+
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .carte {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .carte-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.2rem;
+    }
+
+    .carte-header h2 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #1a2942;
+    }
+
+    .voir-tout {
+      font-size: 0.82rem;
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .match-item {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      padding: 0.9rem 0;
+      border-bottom: 1px solid #f3f4f6;
+    }
+
+    .match-item:last-child {
+      border-bottom: none;
+    }
+
+    .match-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #e5e7eb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    .match-info {
+      flex: 1;
+    }
+
+    .match-nom {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #1a2942;
+    }
+
+    .match-filiere {
+      font-size: 0.75rem;
+      color: #6b7280;
+    }
+
+    .match-msg {
+      font-size: 0.78rem;
+      color: #9ca3af;
+      margin-top: 0.15rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 200px;
+    }
+
+    .match-time {
+      font-size: 0.72rem;
+      color: #9ca3af;
+      flex-shrink: 0;
+    }
+
+    .badge-compatible {
+      background: #dcfce7;
+      color: #16a34a;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.2rem 0.6rem;
+      border-radius: 100px;
+      flex-shrink: 0;
+    }
+
+    .activite-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.9rem;
+      padding: 0.9rem 0;
+      border-bottom: 1px solid #f3f4f6;
+    }
+
+    .activite-item:last-child {
+      border-bottom: none;
+    }
+
+    .activite-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #f3f4f6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.95rem;
+      flex-shrink: 0;
+    }
+
+    .activite-icon.bleu {
+      background: #dbeafe;
+    }
+
+    .activite-icon.vert {
+      background: #dcfce7;
+    }
+
+    .activite-icon.orange {
+      background: #ffedd5;
+    }
+
+    .activite-texte {
+      font-size: 0.82rem;
+      color: #374151;
+      line-height: 1.5;
+    }
+
+    .activite-time {
+      font-size: 0.72rem;
+      color: #9ca3af;
+      margin-top: 0.2rem;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        display: none;
+      }
+
+      .contenu {
+        margin-left: 0;
+        padding: 1.5rem;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .main-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <aside class="sidebar">
+    <div>
+      <a href="accueil.html" class="logo">🎓 IFRI_MentorLink</a>
+      <a href="tableaudebord.html" class="lien actif">🏠 Tableau de bord</a>
+      <a href="profil.html" class="lien">👤 Mon profil</a>
+      <a href="#" class="lien">📋 Offres de mentorat</a>
+      <a href="#" class="lien">📝 Demandes de mentorat</a>
+      <a href="#" class="lien">🔗 Matchs recommandés</a>
+      <a href="messagerie.html" class="lien">
+        💬 Messagerie
+        <span class="badge-notif"></span>
+      </a>
+      <a href="notification.html" class="lien">
+        🔔 Notifications
+        <span class="badge-notif"></span>
+      </a>
+      <a href="parametre.html" class="lien">⚙️ Paramètres</a>
+    </div>
+    <a href="deconnexion.html" class="lien-rouge">→ Déconnexion</a>
+  </aside>
+  <main class="contenu">
+    <div class="top-bar">
+      <div>
+        <h1>Bonjour ! 👋</h1>
+        <p>Voici un aperçu de votre activité</p>
+      </div>
+      <div class="user-info">
+        <div class="user-avatar">😊</div>
+        <div>
+          <div class="user-name"></div>
+          <div class="user-role"></div>
+        </div>
+      </div>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon icon-green">🛡️</div>
+        <div>
+          <div class="stat-val"></div>
+          <div class="stat-label">Offres publiées</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon icon-blue">👤</div>
+        <div>
+          <div class="stat-val"></div>
+          <div class="stat-label">Demandes envoyées</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon icon-purple">🔗</div>
+        <div>
+          <div class="stat-val"></div>
+          <div class="stat-label">Matchs trouvés</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon icon-orange">✉️</div>
+        <div>
+          <div class="stat-val"></div>
+          <div class="stat-label">Messages non lus</div>
+        </div>
+      </div>
+    </div>
+    <div class="main-grid">
+      <div class="carte">
+        <div class="carte-header">
+          <h2>Matchs récents</h2>
+          <a href="notification.html" class="voir-tout">Voir tout</a>
+        </div>
+        <div class="match-item">
+          <div class="match-avatar">😊</div>
+          <div class="match-info">
+            <div class="match-nom"></div>
+            <div class="match-filiere"></div>
+            <div class="match-msg">
+              Votre match a été accepté ...
+            </div>
+          </div>
+          <div>
+            <span class="badge-compatible"></span>
+            <div class="match-time"></div>
+          </div>
+        </div>
+        <div class="match-item">
+          <div class="match-avatar">🧑</div>
+          <div class="match-info">
+            <div class="match-nom"></div>
+            <div class="match-filiere"></div>
+            <div class="match-msg">Votre match est prêt...</div>
+          </div>
+          <div>
+            <span class="badge-compatible"></span>
+            <div class="match-time"></div>
+          </div>
+        </div>
+        <div class="match-item">
+          <div class="match-avatar">👩</div>
+          <div class="match-info">
+            <div class="match-nom"></div>
+            <div class="match-filiere"> </div>
+            <div class="match-msg">
+              Rappel : Session de mentorat demain...
+            </div>
+          </div>
+          <div>
+            <span class="badge-compatible"></span>
+            <div class="match-time"></div>
+          </div>
+        </div>
+      </div>
+      <div class="carte">
+        <div class="carte-header">
+          <h2>Activité récente</h2>
+        </div>
+        <div class="activite-item">
+          <div class="activite-icon vert">😊</div>
+          <div>
+            <div class="activite-texte">
+              Vous avez postulé à l'offre de mentorat en Data Science...
+            </div>
+            <div class="activite-time">Il y a 3 heures</div>
+          </div>
+        </div>
+        <div class="activite-item">
+          <div class="activite-icon bleu">📝</div>
+          <div>
+            <div class="activite-texte">
+              Nouvelle offre disponible en Algorithmique...
+            </div>
+            <div class="activite-time">Il y a 3 heures</div>
+          </div>
+        </div>
+        <div class="activite-item">
+          <div class="activite-icon orange">👤</div>
+          <div>
+            <div class="activite-texte">
+              ... a publié une nouvelle offre...
+            </div>
+            <div class="activite-time">Il y a 1 jour</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+</body>
+
+</html>
