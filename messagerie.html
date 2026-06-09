@@ -1,0 +1,516 @@
+!DOCT<YPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Connexion — IFRI_MentorLink</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #f4f6f9;
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      width: 250px;
+      background: #1a2942;
+      min-height: 100vh;
+      padding: 1.5rem 1rem;
+      position: fixed;
+      top: 0;
+      left: 0;
+    }
+
+    .logo {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 2.5rem;
+      text-decoration: none;
+    }
+
+    .lien {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: rgba(255, 255, 255, 0.65);
+      font-size: 0.92rem;
+      font-weight: 500;
+      padding: 0.7rem 1rem;
+      border-radius: 8px;
+      text-decoration: none;
+      margin-bottom: 0.2rem;
+      transition: all 0.2s;
+    }
+
+    .lien:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: white;
+    }
+
+    .lien.actif {
+      background: #2563eb;
+      color: white;
+    }
+
+    .lien-rouge {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: #ef4444;
+      font-size: 0.92rem;
+      font-weight: 500;
+      padding: 0.7rem 1rem;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .lien-rouge:hover {
+      background: rgba(239, 68, 68, 0.1);
+    }
+
+    .badge-notif {
+      background: #ef4444;
+      color: white;
+      font-size: 0.65rem;
+      font-weight: 700;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: auto;
+    }
+
+    .contenu {
+      margin-left: 250px;
+      flex: 1;
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .liste-conv {
+      width: 320px;
+      background: white;
+      border-right: 1px solid #e5e7eb;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+    }
+
+    .liste-header {
+      padding: 1.5rem;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .liste-header h2 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #1a2942;
+      margin-bottom: 1rem;
+    }
+
+    .search-bar {
+      width: 100%;
+      background: #f4f6f9;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 0.6rem 1rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.85rem;
+      outline: none;
+      color: #1a2942;
+    }
+
+    .conv-item {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      padding: 1rem 1.5rem;
+      cursor: pointer;
+      border-bottom: 1px solid #f3f4f6;
+      transition: background 0.15s;
+    }
+
+    .conv-item:hover {
+      background: #f9fafb;
+    }
+
+    .conv-item.actif {
+      background: #eff6ff;
+    }
+
+    .conv-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #e5e7eb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .conv-avatar .online {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #16a34a;
+      border: 2px solid white;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+    }
+
+    .conv-info {
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .conv-name {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #1a2942;
+      margin-bottom: 0.2rem;
+    }
+
+    .conv-last {
+      font-size: 0.78rem;
+      color: #9ca3af;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .conv-meta {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.4rem;
+      flex-shrink: 0;
+    }
+
+    .conv-time {
+      font-size: 0.7rem;
+      color: #9ca3af;
+    }
+
+    .conv-unread {
+      background: #2563eb;
+      color: white;
+      font-size: 0.65rem;
+      font-weight: 700;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .zone-chat {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background: #f9fafb;
+    }
+
+    .chat-header {
+      background: white;
+      border-bottom: 1px solid #e5e7eb;
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .chat-header .nom {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #1a2942;
+    }
+
+    .chat-header .statut {
+      font-size: 0.75rem;
+      color: #16a34a;
+    }
+
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .msg {
+      display: flex;
+      flex-direction: column;
+      max-width: 65%;
+    }
+
+    .msg.moi {
+      align-self: flex-end;
+      align-items: flex-end;
+    }
+
+    .msg.autre {
+      align-self: flex-start;
+      align-items: flex-start;
+    }
+
+    .msg-bulle {
+      padding: 0.75rem 1rem;
+      border-radius: 12px;
+      font-size: 0.88rem;
+      line-height: 1.5;
+    }
+
+    .msg.moi .msg-bulle {
+      background: #2563eb;
+      color: white;
+      border-bottom-right-radius: 4px;
+    }
+
+    .msg.autre .msg-bulle {
+      background: white;
+      color: #374151;
+      border: 1px solid #e5e7eb;
+      border-bottom-left-radius: 4px;
+    }
+
+    .msg-heure {
+      font-size: 0.68rem;
+      color: #9ca3af;
+      margin-top: 0.3rem;
+    }
+
+    .chat-input {
+      background: white;
+      border-top: 1px solid #e5e7eb;
+      padding: 1rem 1.5rem;
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
+    .chat-input input {
+      flex: 1;
+      background: #f4f6f9;
+      border: 1px solid #e5e7eb;
+      border-radius: 24px;
+      padding: 0.7rem 1.2rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.88rem;
+      outline: none;
+      color: #1a2942;
+    }
+
+    .btn-envoyer {
+      background: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1rem;
+      flex-shrink: 0;
+      transition: background 0.2s;
+    }
+
+    .btn-envoyer:hover {
+      background: #1d4ed8;
+    }
+
+    .date-separateur {
+      text-align: center;
+      font-size: 0.72rem;
+      color: #9ca3af;
+      padding: 0.5rem 0;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        display: none;
+      }
+
+      .contenu {
+        margin-left: 0;
+      }
+
+      .liste-conv {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <aside class="sidebar">
+    <div>
+      <a href="#" class="logo">🎓 IFRI_MentorLink</a>
+      <a href="tableaudebord.html" class="lien">🏠 Tableau de bord</a>
+      <a href="profil.html" class="lien">👤 Mon profil</a>
+      <a href="#" class="lien">📋 Offres de mentorat</a>
+      <a href="#" class="lien">📝 Demandes de mentorat</a>
+      <a href="messagerie.html" class="lien actif">Messagerie</a>
+      <a href="notification.html" class="lien">🔔 Notification </a>
+      <a href="parametre.html" class="lien">⚙️ Paramètres</a>
+      <a href="deconnexion.html" class="lien-rouge lien">→ Déconnexion</a>
+      <span class="badge-notif"></span>
+      </a>
+    </div>
+  </aside>
+  <div class="contenu">
+    <div class="liste-conv">
+      <div class="liste-header">
+        <h2>Messages</h2>
+        <input class="search-bar" type="text" placeholder="🔍 Rechercher une conversation…" />
+      </div>
+      <div class="conv-item actif" onclick="ouvrirChat('')">
+        <div class="conv-avatar">
+          <div class="online"></div>
+        </div>
+        <div class="conv-info">
+          <div class="conv-name"></div>
+          <div class="conv-last"></div>
+        </div>
+        <div class="conv-meta">
+          <div class="conv-time"></div>
+          <div class="conv-unread"></div>
+        </div>
+      </div>
+      <div class="conv-item" onclick="ouvrirChat('')">
+        <div class="conv-avatar"></div>
+        <div class="conv-info">
+          <div class="conv-name"></div>
+          <div class="conv-last"></div>
+        </div>
+        <div class="conv-meta">
+          <div class="conv-time"></div>
+          <div class="conv-unread"></div>
+        </div>
+      </div>
+      <div class="conv-item" onclick="ouvrirChat('')">
+        <div class="conv-avatar"></div>
+        <div class="conv-info">
+          <div class="conv-name"></div>
+          <div class="conv-last"></div>
+        </div>
+        <div class="conv-meta">
+          <div class="conv-time"></div>
+        </div>
+      </div>
+      <div class="conv-item" onclick="ouvrirChat('')">
+        <div class="conv-avatar">
+          <div class="online"></div>
+        </div>
+        <div class="conv-info">
+          <div class="conv-name"></div>
+          <div class="conv-last"></div>
+        </div>
+        <div class="conv-meta">
+          <div class="conv-time"></div>
+        </div>
+      </div>
+    </div>
+    <div class="zone-chat">
+      <div class="chat-header">
+        <div class="conv-avatar" id="chat-avatar"></div>
+        <div>
+          <div class="nom" id="chat-nom"></div>
+          <div class="statut"></div>
+        </div>
+      </div>
+      <div class="chat-messages" id="chat-messages">
+        <div class="date-separateur"></div>
+        <div class="msg autre">
+          <div class="msg-bulle">
+          </div>
+          <div class="msg-heure"></div>
+        </div>
+        <div class="msg moi">
+          <div class="msg-bulle">
+          </div>
+          <div class="msg-heure"></div>
+        </div>
+        <div class="msg autre">
+          <div class="msg-bulle">
+          </div>
+          <div class="msg-heure"></div>
+        </div>
+        <div class="msg moi">
+          <div class="msg-bulle">
+          </div>
+          <div class="msg-heure"></div>
+        </div>
+        <div class="msg autre">
+          <div class="msg-bulle">
+          </div>
+          <div class="msg-heure"></div>
+        </div>
+      </div>
+      <div class="chat-input">
+        <input type="text" id="msg-input" placeholder="Écrire un message…"
+          onkeydown="if(event.key==='Enter') envoyer()" />
+        <button class="btn-envoyer" onclick="envoyer()">➤</button>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+  <script src="/static/js/messagerie.js"></script>
+  <script>
+
+    function ouvrirChat(nom, statut, avatar) {
+      document.getElementById('chat-nom').textContent = nom;
+      document.getElementById('chat-avatar').textContent = avatar;
+      document.querySelectorAll('.conv-item').forEach(el => {
+        el.classList.remove('actif');
+      });
+      event.currentTarget.classList.add('actif');
+      const unread = event.currentTarget.querySelector('.conv-unread');
+      if (unread) unread.remove();
+    }
+    function envoyer() {
+      const input = document.getElementById('msg-input');
+      const texte = input.value.trim();
+      if (!texte) return;
+      const messages = document.getElementById('chat-messages');
+      const msg = document.createElement('div');
+      msg.className = 'msg moi';
+      const now = new Date();
+      const heure = now.getHours() + ':' +
+        String(now.getMinutes()).padStart(2, '0');
+      msg.innerHTML = `
+  <div class="msg-bulle">${texte}</div>
+  <div class="msg-heure">${heure}</div>
+  `;
+      messages.appendChild(msg);
+      messages.scrollTop = messages.scrollHeight;
+      input.value = '';
+    }
+  </script>
+</body>
